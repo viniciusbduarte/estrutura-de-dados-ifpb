@@ -3,7 +3,7 @@
  * Descrição       : Manipulando mais de uma lista Duplamente Encadeada 
  * Autor           : Vinicius Batista Duarte
  * Data de Criação : 14/12/24
- * Última Modificação: 14/12/24
+ * Última Modificação: 17/12/24
  * Versão          : 1.0
  *==============================================================================
  */ 
