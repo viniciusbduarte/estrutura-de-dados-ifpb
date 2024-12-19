@@ -12,8 +12,8 @@
  * 
  * Autor           : Vinicius Batista Duarte
  * Data de Criação : 18/12/24
- * Última Modificação: 18/12/24
- * Versão          : 2.0
+ * Última Modificação: 19/12/24
+ * Versão          : 3.0
  *==============================================================================
  */ 
 
@@ -41,7 +41,7 @@ typedef struct sLISTA LISTA;
 
 //========================= PROTÓTIPOS DE FUNÇÕES ==============================
 void inicializar_empresa(LISTA *gerentes, LISTA *supervisores, LISTA *peoes, LISTA *empresa);
-void inserir_ord(LISTA *lst, const char *nome, const char *cargo, int salario_funcionario);
+void inserir(LISTA *lst, const char *nome, const char *cargo, int salario_funcionario);
 void inserir_desc(LISTA *lst, const char *nome, const char *cargo, int salario_funcionario);
 void preencher_empresa(LISTA *empresa, LISTA *gerentes, LISTA *supervisores, LISTA *peoes);
 void imprimir(LISTA *lst);
@@ -49,31 +49,17 @@ LISTA *cargo_lista(const char *cargo, LISTA *gerentes, LISTA *supervisores, LIST
 
 //========================= FUNÇÃO PRINCIPAL ===================================
 int main() {
+
     LISTA gerentes1, supervisores1, peoes1, empresa1;
-    LISTA gerentes2, supervisores2, peoes2, empresa2;
-
     inicializar_empresa(&gerentes1, &supervisores1, &peoes1, &empresa1);
-    inicializar_empresa(&gerentes2, &supervisores2, &peoes2, &empresa2);
 
-    inserir_ord(cargo_lista("gerente", &gerentes1, &supervisores1, &peoes1), "fulano", "gerente", 1000);
-    inserir_ord(cargo_lista("supervisor", &gerentes1, &supervisores1, &peoes1), "ciclano", "supervisor", 800);
-    inserir_ord(cargo_lista("peao", &gerentes1, &supervisores1, &peoes1), "beltrano", "peao", 500);
-    inserir_ord(cargo_lista("gerente", &gerentes1, &supervisores1, &peoes1), "outrogerente", "gerente", 1200);
+    inserir(cargo_lista("gerente", &gerentes1, &supervisores1, &peoes1), "fulano", "gerente", 1000);
 
-    inserir_ord(cargo_lista("gerente", &gerentes2, &supervisores2, &peoes2), "fulano", "gerente", 1000);
-    inserir_ord(cargo_lista("supervisor", &gerentes2, &supervisores2, &peoes2), "ciclano", "supervisor", 800);
-    inserir_ord(cargo_lista("peao", &gerentes2, &supervisores2, &peoes2), "beltrano", "peao", 500);
-    inserir_ord(cargo_lista("gerente", &gerentes2, &supervisores2, &peoes2), "outrogerente", "gerente", 1200);
-
-    
     preencher_empresa(&empresa1, &gerentes1, &supervisores1, &peoes1);
-    preencher_empresa(&empresa2, &gerentes2, &supervisores2, &peoes2);
 
-  
-    printf("Empresa 1 (organizado): ");
+    printf("Funcionários da empresa: ");
     imprimir(&empresa1);
-    printf("Empresa 2 (organizado): ");
-    imprimir(&empresa2);
+   
     return 0;
 }
 
@@ -92,13 +78,14 @@ LISTA *cargo_lista(const char *cargo, LISTA *gerentes, LISTA *supervisores, LIST
     return NULL;
 }
 
-void inserir_ord(LISTA *lst, const char *nome, const char *cargo, int salario_funcionario) {
+void inserir(LISTA *lst, const char *nome, const char *cargo, int salario_funcionario) {
     if (!lst) {
         printf("Erro: Lista inválida.\n");
         return;
     }
 
     struct sNODE *novo = (struct sNODE*) malloc(sizeof(struct sNODE));
+    
     if (!novo) {
         printf("Erro ao alocar memória.\n");
         return;
@@ -117,6 +104,7 @@ void inserir_ord(LISTA *lst, const char *nome, const char *cargo, int salario_fu
         novo->ant = lst->fim;
         lst->fim = novo;
     }
+    
 }
 
 void inserir_desc(LISTA *lst, const char *nome, const char *cargo, int salario_funcionario) {
@@ -169,7 +157,7 @@ void preencher_empresa(LISTA *empresa, LISTA *gerentes, LISTA *supervisores, LIS
     aux = gerentes->ini;
     while (aux) {
         inserir_desc(empresa, aux->nome, aux->cargo, aux->salario);
-        aux = aux->prox;
+        aux = aux->prox;   
     }
 
     aux = supervisores->ini;
